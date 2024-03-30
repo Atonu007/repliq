@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Device, Employee,DeviceAssignment
+from .models import AssignmentLog, Device, Employee,DeviceAssignment
 from django.shortcuts import get_object_or_404
 
 
@@ -273,7 +273,7 @@ class MarkDeviceReturned(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        # Retrieve device assignment ID and return note from request data
+        
         assignment_id = request.data.get('assignment_id')
         return_note = request.data.get('return_note')
 
@@ -317,3 +317,25 @@ class MarkDeviceReturned(APIView):
         
 
         return Response({"message": "Device marked as returned successfully."}, status=status.HTTP_200_OK)
+    
+
+
+class DeviceLogListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        logs = AssignmentLog.objects.all()
+        serializer = AssignmentLogSerializer(logs, many=True)
+        return Response(serializer.data)
+    
+
+
+class DeviceLogDetailView(APIView):
+    def get(self, request, device_id):
+        try:
+            log = AssignmentLog.objects.get(pk=device_id)
+        except AssignmentLog.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = AssignmentLogSerializer(log)
+        return Response(serializer.data)
