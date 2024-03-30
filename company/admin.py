@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import Employee, User, Device
+from .models import Employee, User, Device,DeviceAssignment,AssignmentLog
 
 class UserModelAdmin(BaseUserAdmin):
     # Displayed columns in the admin list view
@@ -37,3 +37,5 @@ class UserModelAdmin(BaseUserAdmin):
 admin.site.register(User, UserModelAdmin)
 admin.site.register(Employee)
 admin.site.register(Device)
+admin.site.register(DeviceAssignment)
+admin.site.register(AssignmentLog)

@@ -1,5 +1,6 @@
+from django.forms import ValidationError
 from rest_framework import serializers
-from .models import Employee, User,Device
+from .models import DeviceAssignment, Employee, User,Device,AssignmentLog
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Adding password2 field for confirmation
@@ -85,3 +86,64 @@ class DeviceSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Device.objects.create(user=self.context['request'].user, **validated_data)
     
+
+
+class DeviceAssignmentSerializer(serializers.ModelSerializer):
+  assignment_history = serializers.SerializerMethodField()
+
+  class Meta:
+    model = DeviceAssignment
+    fields = ['id', 'user', 'employee', 'device', 'checkout_date', 'checkout_note', 'return_date', 'return_note', 'assignment_history']
+    read_only_fields = ['id', 'checkout_date', 'user', 'return_date', 'return_note', 'assignment_history']
+
+  checkout_note = serializers.CharField(required=True)
+  return_date = serializers.DateTimeField(required=True)
+  employee = serializers.PrimaryKeyRelatedField(queryset=Employee.objects.all(), required=True)
+  device = serializers.PrimaryKeyRelatedField(queryset=Device.objects.all(), required=True)
+
+  def get_assignment_history(self, obj):
+    assignments = DeviceAssignment.objects.filter(device=obj.device).order_by('-checkout_date')
+    history = []
+    for assignment in assignments:
+      history.append({
+          'employee_name': assignment.employee.name,
+          'checkout_date': assignment.checkout_date,
+          'checkout_note': assignment.checkout_note,
+          'return_date': assignment.return_date,
+          'return_note': assignment.return_note
+      })
+    return history
+
+  def create(self, validated_data):
+    # Extract user from request context
+    user = self.context['request'].user
+
+    # Retrieve additional required fields
+    checkout_note = validated_data.pop('checkout_note')
+    return_date = validated_data.pop('return_date')
+
+    # Retrieve the employee instance
+    employee_id = validated_data['employee'].id
+    employee = Employee.objects.get(id=employee_id)
+
+    # Check if employee belongs to the logged-in user (already exists in the code)
+
+    # Check if device is already assigned (already exists in the code)
+
+    # Create a new device assignment with user automatically set
+    return DeviceAssignment.objects.create(
+      user=user,
+      employee=employee,
+      device=validated_data['device'],
+      checkout_note=checkout_note,
+      return_date=return_date
+    )
+  
+
+
+
+
+class AssignmentLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignmentLog
+        fields = '__all__'

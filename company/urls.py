@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AddDevice, DeviceDeleteAPIView, DeviceDetail, DeviceUpdateAPIView, AllDevices, UserRegistrationView,UserLoginView,UserProfileView,UserProfileUpdateView,EmployeeCreateAPIView,EmployeeList,Employeee,EmployeeUpdateAPIView, EmployeeDeleteAPIView
+from .views import MarkDeviceReturned,AddDevice, DeviceAssignmentView, DeviceDeleteAPIView, DeviceDetail, DeviceUpdateAPIView, AllDevices, UserRegistrationView,UserLoginView,UserProfileView,UserProfileUpdateView,EmployeeCreateAPIView,EmployeeList,Employeee,EmployeeUpdateAPIView, EmployeeDeleteAPIView
  
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
@@ -22,6 +22,11 @@ urlpatterns = [
     path('device-detail/<int:id>/', DeviceDetail.as_view(), name='device-detail'),
     path('devices-update/<int:id>/', DeviceUpdateAPIView.as_view(), name='update_device'),
     path('devices-del/<int:id>/', DeviceDeleteAPIView.as_view(), name='delete_device'),
+
+
+    #Device Assignment
+    path('device-assignments/', DeviceAssignmentView.as_view(), name='device-assignments'),
+    path('device-return/', MarkDeviceReturned.as_view(), name='device-return')
 
   
 ]

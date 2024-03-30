@@ -100,3 +100,31 @@ class Device(models.Model):
 
     def __str__(self):
         return self.model
+    
+
+#creating decive assignment model
+class DeviceAssignment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    checkout_date = models.DateTimeField(auto_now_add=True)
+    checkout_note = models.TextField()
+    return_date = models.DateTimeField(null=True, blank=True)
+    return_note = models.TextField(null=True, blank=True)
+    def return_device(self, return_date, return_note):
+        # Implement logic to handle device return (e.g., update status, send notifications)
+        self.is_returned = True  
+        self.save()
+
+#creting the log to track the device assginment history
+class AssignmentLog(models.Model):
+    assignment = models.ForeignKey(DeviceAssignment, on_delete=models.CASCADE)
+    assigned_to = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    checkout_date = models.DateTimeField()
+    checkout_note = models.TextField(blank=True, null=True)
+    return_date = models.DateTimeField(blank=True, null=True)
+    return_note = models.TextField(blank=True, null=True)
+
+
+   

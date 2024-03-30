@@ -1,11 +1,12 @@
+from django.utils import timezone
 from django.contrib.auth import authenticate
-from .serializers import DeviceSerializer, EmployeeSerializer, UserProfileSerializer, UserRegistrationSerializer, UserLoginSerializer
+from .serializers import AssignmentLogSerializer, DeviceAssignmentSerializer, DeviceSerializer, EmployeeSerializer, UserProfileSerializer, UserRegistrationSerializer, UserLoginSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Device, Employee
+from .models import Device, Employee,DeviceAssignment
 from django.shortcuts import get_object_or_404
 
 
@@ -252,3 +253,67 @@ class DeviceDeleteAPIView(APIView):
         
         # Return success response
         return Response({"detail": "Device deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    
+
+
+
+class DeviceAssignmentView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = DeviceAssignmentSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class MarkDeviceReturned(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Retrieve device assignment ID and return note from request data
+        assignment_id = request.data.get('assignment_id')
+        return_note = request.data.get('return_note')
+
+        
+        if not return_note:
+            return Response({"error": "Return note is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        
+        try:
+            assignment = DeviceAssignment.objects.get(id=assignment_id)
+        except DeviceAssignment.DoesNotExist:
+            return Response({"error": "Device assignment not found."}, status=status.HTTP_404_NOT_FOUND)
+
+       
+        assignment.return_date = timezone.now()  
+
+     
+
+        
+        assignment.return_device(return_date=assignment.return_date, return_note=return_note)
+
+       
+        assignment_log_data = {
+            'assignment': assignment.id,
+            'assigned_to': assignment.employee.user.id,
+            'checkout_date': assignment.checkout_date,
+            'checkout_note': assignment.checkout_note,
+            'return_date': assignment.return_date,
+            'return_note': return_note
+        }
+
+      
+
+        assignment_log_serializer = AssignmentLogSerializer(data=assignment_log_data)
+
+        if assignment_log_serializer.is_valid():
+            assignment_log_serializer.save()  
+        else:
+            return Response(assignment_log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        
+
+        return Response({"message": "Device marked as returned successfully."}, status=status.HTTP_200_OK)
