@@ -125,3 +125,44 @@ class EmployeeList(APIView):
     
 
 
+class Employeee(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request,id):
+        
+        employee = Employee.objects.get(id=id)  
+        serializer = EmployeeSerializer(employee)
+        return Response(serializer.data)
+    
+class EmployeeUpdateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, id, format=None):
+        try:
+            employee = Employee.objects.get(id=id, user=request.user)
+        except Employee.DoesNotExist:
+            return Response({"detail": "Employee not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = EmployeeSerializer(employee, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class EmployeeDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, id, format=None):
+        # Get the employee object or return 404 if not found
+        employee = get_object_or_404(Employee, id=id)
+        
+        # Check if the employee belongs to the requesting user
+        if employee.user != request.user:
+            return Response({"detail": "You are not authorized to delete this employee."}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Delete the employee
+        employee.delete()
+        
+        # Return success response
+        return Response({"detail": "Employee deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
