@@ -87,4 +87,16 @@ class Employee(models.Model):
     department = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name  
+        return self.name
+
+
+# Createing Employee Model.
+class Device(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    serial_number = models.CharField(max_length=100)  
+    purchase_date = models.DateField()
+
+    def __str__(self):
+        return self.model

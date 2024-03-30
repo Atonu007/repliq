@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee, User
+from .models import Employee, User,Device
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Adding password2 field for confirmation
@@ -75,3 +75,13 @@ class EmployeeSerializer(serializers.ModelSerializer):
         if 'user' in self.initial_data:
             raise serializers.ValidationError("The 'user' field is not required as it is automatically derived from the logged-in user.")
         return data  
+    
+
+class DeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = ['id', 'type', 'model', 'serial_number', 'purchase_date']
+
+    def create(self, validated_data):
+        return Device.objects.create(user=self.context['request'].user, **validated_data)
+    

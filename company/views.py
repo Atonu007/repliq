@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate
-from .serializers import EmployeeSerializer, UserProfileSerializer, UserRegistrationSerializer, UserLoginSerializer
+from .serializers import DeviceSerializer, EmployeeSerializer, UserProfileSerializer, UserRegistrationSerializer, UserLoginSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Employee
+from .models import Device, Employee
 from django.shortcuts import get_object_or_404
 
 
@@ -22,6 +22,7 @@ def get_tokens_for_user(user):
         'access': str(refresh.access_token),
     }
 
+#user related views
 class UserRegistrationView(APIView):
    
     #API endpoint for user registration.
@@ -94,7 +95,7 @@ class UserProfileUpdateView(APIView):
     
 
 
-
+#Employee related views
 class EmployeeCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -166,3 +167,36 @@ class EmployeeDeleteAPIView(APIView):
         
         # Return success response
         return Response({"detail": "Employee deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+    
+
+
+
+#Device related view
+class AddDevice(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        # Create a new device with the provided data
+        serializer = DeviceSerializer(data=request.data, context={'request': request})
+        
+        # Check if the data is valid
+        if serializer.is_valid():
+            # Save the device
+            serializer.save()
+            # Return success response with created device data
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+        # Return error response with serializer errors if data is not valid
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AllDevices(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        # Get all devices belonging to the requesting user
+        devices = Device.objects.filter(user=request.user)
+        # Serialize the devices
+        serializer = DeviceSerializer(devices, many=True)
+        # Return serialized data
+        return Response(serializer.data)
+

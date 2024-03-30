@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserRegistrationView,UserLoginView,UserProfileView,UserProfileUpdateView,EmployeeCreateAPIView,EmployeeList,Employeee,EmployeeUpdateAPIView, EmployeeDeleteAPIView
+from .views import AddDevice, AllDevices, UserRegistrationView,UserLoginView,UserProfileView,UserProfileUpdateView,EmployeeCreateAPIView,EmployeeList,Employeee,EmployeeUpdateAPIView, EmployeeDeleteAPIView
  
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
@@ -14,6 +14,12 @@ urlpatterns = [
     path('employee/<int:id>/', Employeee.as_view(), name='employe-detail'),
     path('employee-update/<int:id>/',EmployeeUpdateAPIView.as_view(), name='employe-update'),
     path('employees-delete/<int:id>/', EmployeeDeleteAPIView.as_view(), name='delete_employee'),
+
+
+    #Device
+    path('devices-create/', AddDevice.as_view(), name='device-create'),
+    path('devices/', AllDevices.as_view(), name='device-list'),
+   
 
   
 ]
