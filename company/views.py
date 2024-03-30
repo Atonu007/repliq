@@ -63,14 +63,33 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
+        # Retrieve all employees associated with the logged-in user
+        employees = Employee.objects.filter(user=request.user)
+        employee_serializer = EmployeeSerializer(employees, many=True)
+
+        devices = Device.objects.filter(user=request.user)
+        device_serializer = DeviceSerializer(devices, many=True)
+        
+
+        # Get the total number of employees associated with the user
+        total_employees = employees.count()
+        total_devices = devices.count()
+
         # Serialize user profile
         user_profile_serializer = UserProfileSerializer(request.user)
 
         # Prepare response data
         response_data = {
-            'user_profile': user_profile_serializer.data,
+            'total_employees': total_employees,
+            'employees': employee_serializer.data,
+            'total_device': total_devices,
+            'devices': device_serializer.data, 
+           
+            
         }
         return Response(response_data, status=status.HTTP_200_OK)
+    
+
 
 class UserProfileUpdateView(APIView):
    
