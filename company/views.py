@@ -200,3 +200,55 @@ class AllDevices(APIView):
         # Return serialized data
         return Response(serializer.data)
 
+class DeviceDetail(APIView):
+    permission_classes =[IsAuthenticated]
+
+    def get(self, request, id):
+        # Get the device by id or return 404 if not found
+        device = get_object_or_404(Device, id=id)
+        # Serialize the device
+        serializer = DeviceSerializer(device)
+        # Return serialized device data
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DeviceUpdateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, id, format=None):
+        # Get the device object or return 404 if not found
+        device = get_object_or_404(Device, id=id)
+        
+        # Check if the device belongs to the requesting user
+        if device.user != request.user:
+            # Return forbidden response if the device does not belong to the user
+            return Response({"detail": "You are not authorized to update this device."}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Update the device with the provided data
+        serializer = DeviceSerializer(device, data=request.data, context={'request': request})
+        # Check if the data is valid
+        if serializer.is_valid():
+            # Save the updated device
+            serializer.save()
+            # Return success response with updated device data
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        # Return error response with serializer errors if data is not valid
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class DeviceDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, id, format=None):
+        # Get the device object or return 404 if not found
+        device = get_object_or_404(Device, id=id)
+        
+        # Check if the device belongs to the requesting user
+        if device.user != request.user:
+            # Return forbidden response if the device does not belong to the user
+            return Response({"detail": "You are not authorized to delete this device."}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Delete the device
+        device.delete()
+        
+        # Return success response
+        return Response({"detail": "Device deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
