@@ -1,0 +1,612 @@
+{
+	"info": {
+		"_postman_id": "975a782b-d306-4b6d-a823-56931a8c40cc",
+		"name": "asset_management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32610424"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ams@gmail.com\",\n    \"name\": \"ams\",\n    \"password\":\"1217630364a\",\n    \"password2\": \"1217630364a\",\n    \"phone\": \"1217630364\",\n    \"address\": \"Dhaka\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}register/",
+					"host": [
+						"{{DOMAIN}}register"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for user registration, where users can submit registration data via a POST request, and upon successful registration, they receive an authentication token."
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"email\":\"ams@gmail.com\",\n    \"password\":\"1217630364a\"\n    \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}login/",
+					"host": [
+						"{{DOMAIN}}login"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for user login, where users can submit login credentials via a POST request. Upon successful login, they receive an authentication token. If the login fails due to invalid credentials, an appropriate error message is returned."
+			},
+			"response": []
+		},
+		{
+			"name": "user-profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}profile/",
+					"host": [
+						"{{DOMAIN}}profile"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for user login, where users can submit login credentials via a POST request. Upon successful login, they receive an authentication token. If the login fails due to invalid credentials, an appropriate error message is returned."
+			},
+			"response": []
+		},
+		{
+			"name": "user-profile-update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n    \"email\": \"test@gmail.com\",\n    \"name\": \"test12\",\n    \"phone\": \"12177637546\",\n    \"address\": \"Dhaka\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}profile-update/",
+					"host": [
+						"{{DOMAIN}}profile-update"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for updating user profiles. Only authenticated users are allowed to access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "create-employee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Employee1\",\n    \"department\": \"HR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}create-employee/",
+					"host": [
+						"{{DOMAIN}}create-employee"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for creating employee records. Only authenticated users are allowed to access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "employee detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}employee/1/",
+					"host": [
+						"{{DOMAIN}}employee"
+					],
+					"path": [
+						"1",
+						""
+					]
+				},
+				"description": "API endpoint intended to handle HTTP GET requests for retrieving employee data. It requires authentication for access."
+			},
+			"response": []
+		},
+		{
+			"name": "employee-List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}employees/",
+					"host": [
+						"{{DOMAIN}}employees"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint (`EmployeeList`) for retrieving a list of employees associated with the currently logged-in user. It ensures that only authenticated users can access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "employee-update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Employee\",\n    \"department\":\"It\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}employee-update/1/",
+					"host": [
+						"{{DOMAIN}}employee-update"
+					],
+					"path": [
+						"1",
+						""
+					]
+				},
+				"description": "API view for updating employee records. It requires authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "employees-delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE2NDgxLCJpYXQiOjE3MTE4MTUyODEsImp0aSI6IjNhZGQ5Nzc0MDVkMDQzNGU5NjNlODI2MjI0NWUwZWUwIiwidXNlcl9pZCI6M30.dpDvnqyOtfmPwKspmd5Id380khdRSu4VrvszwOH5YAA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}employees-delete/2/",
+					"host": [
+						"{{DOMAIN}}employees-delete"
+					],
+					"path": [
+						"2",
+						""
+					]
+				},
+				"description": "API end point, which handles HTTP DELETE requests for deleting employee records. It requires authentication for access."
+			},
+			"response": []
+		},
+		{
+			"name": "devices-create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE3NjUyLCJpYXQiOjE3MTE4MTY0NTIsImp0aSI6IjY1ZGI4ODQ1NzU3NDRmZDBiODVlYjlhOWY2ZmYzYzE1IiwidXNlcl9pZCI6M30.LOAsIuse7o2Q5lN7P1cMcxOyxk7KbauKruCufv2HiaM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\":\"laptop\",\n    \"model\": \"x3\",\n    \"serial_number\":\"1234\",\n    \"purchase_date\":\"2024-01-4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}devices-create/",
+					"host": [
+						"{{DOMAIN}}devices-create"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "API endpoint for creating device. Only authenticated users are allowed to access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "device-list",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE3NjUyLCJpYXQiOjE3MTE4MTY0NTIsImp0aSI6IjY1ZGI4ODQ1NzU3NDRmZDBiODVlYjlhOWY2ZmYzYzE1IiwidXNlcl9pZCI6M30.LOAsIuse7o2Q5lN7P1cMcxOyxk7KbauKruCufv2HiaM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}devices/",
+					"host": [
+						"{{DOMAIN}}devices"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for creating employee records. Only authenticated users are allowed to access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "device-detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE3NjUyLCJpYXQiOjE3MTE4MTY0NTIsImp0aSI6IjY1ZGI4ODQ1NzU3NDRmZDBiODVlYjlhOWY2ZmYzYzE1IiwidXNlcl9pZCI6M30.LOAsIuse7o2Q5lN7P1cMcxOyxk7KbauKruCufv2HiaM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}device-detail/1/",
+					"host": [
+						"{{DOMAIN}}device-detail"
+					],
+					"path": [
+						"1",
+						""
+					]
+				},
+				"description": "API endpoint for retrieving a list of devices associated with the currently logged-in user. It ensures that only authenticated users can access this endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "devices-update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE3NjUyLCJpYXQiOjE3MTE4MTY0NTIsImp0aSI6IjY1ZGI4ODQ1NzU3NDRmZDBiODVlYjlhOWY2ZmYzYzE1IiwidXNlcl9pZCI6M30.LOAsIuse7o2Q5lN7P1cMcxOyxk7KbauKruCufv2HiaM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"mobile\",\n    \"model\": \"A3\",\n    \"serial_number\":\"1234\",\n    \"purchase_date\": \"2024-03-12\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}devices-update/1/",
+					"host": [
+						"{{DOMAIN}}devices-update"
+					],
+					"path": [
+						"1",
+						""
+					]
+				},
+				"description": "API view for updating device records. It requires authentication."
+			},
+			"response": []
+		},
+		{
+			"name": "devices-delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODE3NjUyLCJpYXQiOjE3MTE4MTY0NTIsImp0aSI6IjY1ZGI4ODQ1NzU3NDRmZDBiODVlYjlhOWY2ZmYzYzE1IiwidXNlcl9pZCI6M30.LOAsIuse7o2Q5lN7P1cMcxOyxk7KbauKruCufv2HiaM",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}devices-del/1/",
+					"host": [
+						"{{DOMAIN}}devices-del"
+					],
+					"path": [
+						"1",
+						""
+					]
+				},
+				"description": "API end point, which handles HTTP DELETE requests for deleting device records. It requires authentication for access."
+			},
+			"response": []
+		},
+		{
+			"name": "device-return",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODEwMzUxLCJpYXQiOjE3MTE4MDkxNTEsImp0aSI6ImJhNzE1MDIwMjlmMzRhMTQ5Y2Q3OTJmMzA5YTJiZTRiIiwidXNlcl9pZCI6NH0.B5dAuP3Btb1YGxRyTpb7YT5vwVNz9CCEjvOeX5pYJYw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}device-return/",
+					"host": [
+						"{{DOMAIN}}device-return"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for marking a device as returned. The endpoint requires authentication.It prepares data for an assignment log, including assignment details and return information."
+			},
+			"response": []
+		},
+		{
+			"name": "device-assignments",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODA5MDIwLCJpYXQiOjE3MTE4MDc4MjAsImp0aSI6IjJhYzgwYWUyZjJmNDRhNDdiMDc2NGY3MjdkOTBhZjk1IiwidXNlcl9pZCI6NH0.9Y4xaAczHDQC78dXMmwt8v4S1Hc4Z0GHh7gl60oS5_s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"employee\":\"2\",\n    \"device\": \"1\",\n    \"checkout_note\": \"new\",\n    \"return_date\":\"2024-04-05T12:00:00Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}device-assignments/",
+					"host": [
+						"{{DOMAIN}}device-assignments"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "It is designed to handle POST requests for assigning devices to employee.Authentication is needed."
+			},
+			"response": []
+		},
+		{
+			"name": "all logs",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODEzMTM0LCJpYXQiOjE3MTE4MTE5MzQsImp0aSI6IjBiOWU0NDY3YmNhNTRhNDI4ZDhkNTA1OTZjYmI0YWIwIiwidXNlcl9pZCI6NH0.RB_OGoaPXmzY1n3zD0ZqfGVc4ppDBUJ6aV6aQuEs6qU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}device-logs/",
+					"host": [
+						"{{DOMAIN}}device-logs"
+					],
+					"path": [
+						""
+					]
+				},
+				"description": "API endpoint for retrieving a list of device logs. Authentication is needed."
+			},
+			"response": []
+		},
+		{
+			"name": "device-logs-detail",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzExODEzMTM0LCJpYXQiOjE3MTE4MTE5MzQsImp0aSI6IjBiOWU0NDY3YmNhNTRhNDI4ZDhkNTA1OTZjYmI0YWIwIiwidXNlcl9pZCI6NH0.RB_OGoaPXmzY1n3zD0ZqfGVc4ppDBUJ6aV6aQuEs6qU",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{DOMAIN}}device-logs/1/",
+					"host": [
+						"{{DOMAIN}}device-logs"
+					],
+					"path": [
+						"1",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "API endpoint for retrieving details of a specific device log by its ID. Authentication is needed."
+			},
+			"response": []
+		}
+	]
+}
