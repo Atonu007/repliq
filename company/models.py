@@ -6,7 +6,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email, name, phone, address, password=None):
        
         #Creates and saves a User with the given email, name, phone, address, and password.
-        
+       
         if not email:
             raise ValueError('User must have an email address')
 
@@ -24,9 +24,9 @@ class UserManager(BaseUserManager):
         return user
    
     def create_superuser(self, email, name, phone, address, password=None):
-      
-        #Creates and saves a superuser with the given email, name, phone, address, and password.
-        
+        """
+        Creates and saves a superuser with the given email, name, phone, address, and password.
+        """
         # Call create_user method to create a user
         user = self.create_user(
             email,
@@ -64,23 +64,17 @@ class User(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        """
-        Does the user have a specific permission?
-        """
+       
         # Simplest possible answer: Yes, always for admin
         return self.is_admin
 
     def has_module_perms(self, app_label):
-        """
-        Does the user have permissions to view the app `app_label`?
-        """
+       
         # Simplest possible answer: Yes, always for admin
         return True
 
     @property
     def is_staff(self):
-        """
-        Is the user a member of staff?
-        """
+       
         # Simplest possible answer: All admins are staff
         return self.is_admin
