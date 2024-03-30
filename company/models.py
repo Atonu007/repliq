@@ -24,9 +24,7 @@ class UserManager(BaseUserManager):
         return user
    
     def create_superuser(self, email, name, phone, address, password=None):
-        """
-        Creates and saves a superuser with the given email, name, phone, address, and password.
-        """
+        # Createing and saves a superuser with the given email, name, phone, address, and password.
         # Call create_user method to create a user
         user = self.create_user(
             email,
@@ -78,3 +76,15 @@ class User(AbstractBaseUser):
        
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+
+
+
+# Createing Employee Model.
+class Employee(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    name =models.CharField(max_length=100)
+    department = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name  

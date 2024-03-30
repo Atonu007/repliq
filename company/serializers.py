@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import Employee, User
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     # Adding password2 field for confirmation
@@ -42,3 +42,36 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = User
         # Define fields to be serialized in user profile
         fields = ['id', 'email', 'name', 'phone', 'address']
+
+
+
+
+class EmployeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employee
+        fields = ['name', 'department', 'user']
+        read_only_fields = ['user']
+
+    def create(self, validated_data):
+        # Set the user field to the currently logged-in user
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
+
+    def validate_user(self, value):
+        
+        #Ensure that the 'user' field matches the currently logged-in user.
+      
+        request = self.context.get('request')
+        if value != request.user.id:
+            raise serializers.ValidationError("You do not have permission to create an employee for this user.")
+        return value
+
+    def validate(self, data):
+        
+        #Validate the entire input data.
+       
+        # 'initial_data' contains the raw input data before validation.
+        # It's not necessary to check 'initial_data' for the 'user' field here.
+        if 'user' in self.initial_data:
+            raise serializers.ValidationError("The 'user' field is not required as it is automatically derived from the logged-in user.")
+        return data  
