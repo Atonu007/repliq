@@ -42,7 +42,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # Define fields to be serialized in user profile
-        fields = ['id', 'email', 'name', 'phone', 'address']
+        fields = [ 'email', 'name', 'phone', 'address']
 
 
 
