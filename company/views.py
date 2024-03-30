@@ -65,4 +65,24 @@ class UserProfileView(APIView):
         }
         return Response(response_data, status=status.HTTP_200_OK)
 
+class UserProfileUpdateView(APIView):
+    """
+    API endpoint for updating user profile.
+    """
+    permission_classes = [IsAuthenticated]
 
+    def put(self, request, format=None):
+        # Get the logged-in user
+        user = request.user
+        
+        # Deserialize the request data
+        serializer = UserProfileSerializer(instance=user, data=request.data, partial=True)
+        
+        # Check if the data is valid
+        if serializer.is_valid():
+            # Save the updated profile data
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        
+        # If the data is not valid, return errors
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
