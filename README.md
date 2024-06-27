@@ -58,7 +58,7 @@ Device Log Related Features
 
 2.Django Rest Framework: A powerful and flexible toolkit for building Web APIs in Django.
 
-3.PostgreSQL: A powerful, open-source object-relational database system.
+3.SQLITE: Relational database system.
 
 
 
